@@ -15,45 +15,55 @@ while True:
     message = input('Introduce un mensaje:')
     msg = message.lower()
 
-    if ( msg == "hola"):
-       print(functions.saludar(name))
+    match message:
+        case "hola":
+            print(functions.saludar(name))
 
-    elif (msg == "que hora es"):
-        print(functions.times()) 
+        case "que hora es":
+            print(functions.times())
+        
+        case "estado de animo":
+            print(functions.mood())
+        
+        case "cuenta un chiste":
+            print(functions.joke())
 
-    elif (msg == "estado de animo"):
-        print(functions.mood())
+        case "motivacion":
+            print(functions.motivation())
+        
+        case "que dia es hoy":
+            print(functions.day())
     
-    elif (msg == "cuenta un chiste"):
-        print(functions.joke())
-    
-    elif (msg == "motivacion"):
-      print(functions.motivation())
-
-    elif  ( msg == "que dia es hoy"):
-       print(functions.day())
-    
-    elif (msg == "tema"):
-        tema = input('Introduce un tema para hablar:').lower()
-
-        match tema:
-            case "politica":
-                print('Bot:!Encantado estoy de hablar de politica')
+        case "tema":
+           tema = input('Introduce un tema para hablar:').strip().lower()
+           match tema:
+                case "politica":
+                    print('Bot:!Encantado estoy de hablar de politica')
+                    
+                case "amor":
+                    print('Bot:!Encantado estoy de hablar contigo de amor')
+                    
+                case "negocios":
+                    print('Bot:!Encantado estoy de hablar contigo de negocios')
+                    
+                case "dinero":
+                    print('Bot:!Encantado estoy de hablar contigo de dinero')
                 
-            case "amor":
-                print('Bot:!Encantado estoy de hablar contigo de amor')
+                case "salud":
+                    print('Bot:!Encantado estoy de hablar contigo de salud')
                 
-            case "negocios":
-                print('Bot:!Encantado estoy de hablar contigo de negocios')
+                case "ia":
+                    print('Bot:!Estoy encantado de hablar contigo de  IA') 
                 
-            case "dinero":
-                print('Bot:!Encantado estoy de hablar contigo de dinero')
+                case _:
+                   print('Bot:! No conozco ese tema')
             
-            case "salud":
-                print('Bot:!Encantado estoy de hablar contigo de salud')
-       
-    elif (msg == "salir"):
-        print(functions.despedida(name)) 
-        break
+        case "salir":
+            print(functions.despedida(name)) 
+            break
+
+        case _:
+            print('Bot:!No entiendo tu mensaje')    
+
     contador_preguntas += 1
-print(f'El número de preguntas es: {contador_preguntas}')  
+print(f'El número de preguntas es: {contador_preguntas}')      

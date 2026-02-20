@@ -1,4 +1,6 @@
 import information
+import requests
+import API
 import random
 import time
 from datetime import date
@@ -10,20 +12,47 @@ def saludar(name):
      return f"Bot!: ¡ENCANTADO DE PODER SALUUDARTE! {name}" 
 
 def times():
-    ahora = time.gmtime()
-    return f"Bot:! Son las {ahora.tm_hour}:{ahora.tm_min}:{ahora.tm_sec}"
+    respuesta = requests.get(API.url_time)
+    data = respuesta.json()
+    hora = data['hour']
+    minuto = data['minute']
+    segundo = data['seconds']
+    return f"Bot!: Son las {hora:02}:{minuto:02}:{segundo:02}"
 
 def mood():
-    return f"Bot!: Hoy me siento {random.choice(information.estados_animo)}"
+    respuesta = requests.get(API.url_mod)
+    data = respuesta.json()
+    frase = data['affirmation']
+    return f"Bot!: Hoy me siento {frase}"
 
 def joke():
-    return f"Bot:! El chiste de hoy {random.choice(information.chistes)}"
+    respuesta = requests.get(API.url_joke)
+    data = respuesta.json()
+    
+    if data["type"] == "single":
+        return f"Bot:!{data['joke']}"
+    else:
+        return f"Bot:!{data['setup']}"
+
 
 def motivation():
-    return f"Bot:!La frase de motivación de hoy {random.choice(information.frases_motivacion)}"
+    respuesta = requests.get(API.url_motivation, timeout=5)
+
+    if respuesta.status_code == 200:
+        print(respuesta.text)
+        datos = respuesta.json()
+        quote = datos.get("quote")
+        autor = datos.get("auyor")
+        return f'Bot!: "{quote}" - {autor}'       
+
 
 def day():
-    return f"Bot!: Hoy es día: {hoy_dia.day}/{hoy_dia.month}/{hoy_dia.year}"
+    respuesta = requests.get(API.url_day)
+    data = respuesta.json()
+    day = data['day']
+    month = data['month']
+    year = data['year']
+    return f"Bot:! Hoy es día: {day}/{month}/{year}" 
 
 def despedida(name):
-    return f"Bot:! Hasta la próxima {name}"
+    return f"Bot:! Hasta la próxima {name}"    
